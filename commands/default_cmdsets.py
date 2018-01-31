@@ -24,7 +24,7 @@ from evennia.contrib import gendersub # Gender on characters
 from evennia.contrib import slow_exit # Movement speed / slow exit
 from evennia.contrib import simpledoor # Simple, lockable doors
 from evennia.contrib import mail # Simple in-game mail
-
+from evennia.contrib.multidescer import CmdMultiDesc # Multi-descriptor
 
 
 class CharacterCmdSet(default_cmds.CharacterCmdSet):
@@ -48,6 +48,7 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         self.add(slow_exit.CmdStop()) # Slow exit movement stop
         self.add(dice.CmdDice())  # Dice Roller
         self.add(dice.CmdMail()) # In-game mail
+        self.add(CmdMultiDesc()) # Multidescriptor
 
 class AccountCmdSet(default_cmds.AccountCmdSet):
     """

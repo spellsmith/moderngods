@@ -99,13 +99,6 @@ CMDSET_UNLOGGEDIN = "contrib.menu_login.UnloggedinCmdSet"
 ADMINS = [('Spellsmith','spellsmithtsw@gmail.com')]
 
 
-# Set default room class to ExtendedRoom
-BASE_ROOM_TYPECLASS = "evennia.contrib.extended_room.ExtendedRoom"
-
-# Set default character class to have gender (gendersu.py)
-DEFAULT_CHARACTER = "evennia.contrib.gendersub.GenderCharacter"
-
-
 ######################################################################
 # Settings given in secret_settings.py override those in this file.
 ######################################################################

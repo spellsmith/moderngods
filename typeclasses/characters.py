@@ -9,9 +9,9 @@ creation commands.
 """
 from evennia import DefaultCharacter
 from evennia.contrib.gendersub import GenderCharacter
+from evennia.contrib.rpsystem import ContribRPCharacter
 
-#class Character(DefaultCharacter):
-class Character(GenderCharacter):
+class Character(GenderCharacter, ContribRPCharacter):
     """
     The Character defaults to reimplementing some of base Object's hook methods with the
     following functionality:

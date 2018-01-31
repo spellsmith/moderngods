@@ -7,9 +7,8 @@ for allowing Characters to traverse the exit to its destination.
 
 """
 from evennia import DefaultExit
-from evennia.contribs.slow_exit import SlowExit
+from evennia.contrib.slow_exit import SlowExit
 
-#class Exit(DefaultExit):
 class Exit(SlowExit):
 
     """
