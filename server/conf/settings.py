@@ -99,6 +99,20 @@ CMDSET_UNLOGGEDIN = "contrib.menu_login.UnloggedinCmdSet"
 ADMINS = [('Spellsmith','spellsmithtsw@gmail.com')]
 
 
+# Default Channels
+DEFAULT_CHANNELS = [
+    # public channel
+    {"key": "OOC",
+     "aliases": "",
+     "desc": "Game-Wide OOC discussion",
+     "locks": "control:perm(Admin);listen:all();send:all()"},
+    # connection/mud info
+    {"key": "MudInfo",
+     "aliases": "",
+     "desc": "Connection log",
+     "locks": "control:perm(Developer);listen:perm(Admin);send:false()"}
+]
+
 ######################################################################
 # Settings given in secret_settings.py override those in this file.
 ######################################################################

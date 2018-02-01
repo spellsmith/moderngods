@@ -50,6 +50,10 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         self.add(CmdMultiDesc()) # Multidescriptor
         self.add(simpledoor.CmdOpen()) # Simple Doors
         self.add(simpledoor.CmdOpenCloseDoor()) # Simple Doors
+        self.add(extended_room.CmdExtendedLook()) # Extended Room
+        self.add(extended_room.CmdExtendedDesc()) # Extended Room
+        self.add(extended_room.CmdGameTime()) # Extended Room
+
 
 class AccountCmdSet(default_cmds.AccountCmdSet):
     """
@@ -68,9 +72,6 @@ class AccountCmdSet(default_cmds.AccountCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
-        self.add(extended_room.CmdExtendedLook()) # Extended Room
-        self.add(extended_room.CmdExtendedDesc()) # Extended Room
-        self.add(extended_room.CmdGameTime()) # Extended Room
         self.add(CmdMail()) # In-game mail
 
 class UnloggedinCmdSet(default_cmds.UnloggedinCmdSet):
