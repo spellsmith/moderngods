@@ -17,13 +17,13 @@ own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 from evennia import default_cmds
 
 #Contribs Imported
-from evennia.contrib import dice # Dice Roller
+from evennia.contrib.dice import roll_dice # Dice Roller
 from evennia.contrib import simpledoor # Simple, Lockable Doors
 from evennia.contrib import extended_room # Extended Rooms
 from evennia.contrib import gendersub # Gender on characters
 from evennia.contrib import slow_exit # Movement speed / slow exit
 from evennia.contrib import simpledoor # Simple, lockable doors
-from evennia.contrib import mail # Simple in-game mail
+from evennia.contrib.mail import CmdMail # Simple in-game mail
 from evennia.contrib.multidescer import CmdMultiDesc # Multi-descriptor
 
 
@@ -47,8 +47,9 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         self.add(slow_exit.CmdSetSpeed()) # Slow exit movement speed
         self.add(slow_exit.CmdStop()) # Slow exit movement stop
         self.add(dice.CmdDice())  # Dice Roller
-        self.add(dice.CmdMail()) # In-game mail
         self.add(CmdMultiDesc()) # Multidescriptor
+        self.add(simpledoor.CmdOpen()) # Simple Doors
+        self.add(simpledoor.CmdOpenCloseDoor()) # Simple Doors
 
 class AccountCmdSet(default_cmds.AccountCmdSet):
     """
@@ -67,7 +68,10 @@ class AccountCmdSet(default_cmds.AccountCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
-
+        self.add(extended_room.CmdExtendedLook()) # Extended Room
+        self.add(extended_room.CmdExtendedDesc()) # Extended Room
+        self.add(extended_room.CmdGameTime()) # Extended Room
+        self.add(CmdMail()) # In-game mail
 
 class UnloggedinCmdSet(default_cmds.UnloggedinCmdSet):
     """
@@ -105,8 +109,4 @@ class SessionCmdSet(default_cmds.SessionCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
-        self.add(simpledoor.CmdOpen()) # Simple Doors
-        self.add(simpledoor.CmdOpenCloseDoor()) # Simple Doors
-        self.add(extended_room.CmdExtendedLook()) # Extended Room
-        self.add(extended_room.CmdExtendedDesc()) # Extended Room
-        self.add(extended_room.CmdGameTime()) # Extended Room
+

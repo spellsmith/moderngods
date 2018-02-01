@@ -1,40 +1,22 @@
-# Welcome to Evennia!
+# Welcome to Modern Gods
 
-This is your game directory, set up to let you start with
-your new game right away. An overview of this directory is found here:
-https://github.com/evennia/evennia/wiki/Directory-Overview#the-game-directory
 
-You can delete this readme file when you've read it and you can
-re-arrange things in this game-directory to suit your own sense of
-organisation (the only exception is the directory structure of the
-`server/` directory, which Evennia expects). If you change the structure
-you must however also edit/add to your settings file to tell Evennia
-where to look for things.
+Modern Gods is the working title of a fictional urban-supernatural setting, 
+inspired by the stories of the Cerberus Solutions roleplay group, and various
+real world, literary, and original influences.  It is primarily the brainchild
+of Spellsmith, and is meant primarily to be a vehicle for a text-based 
+roleplay MUD and a setting for various author stories.
 
-Your game's main configuration file is found in
-`server/conf/settings.py` (but you don't need to change it to get
-started). If you just created this directory (which means you'll already
-have a `virtualenv` running if you followed the default instructions),
-`cd` to this directory then initialize a new database using
+A partial list of (fictional) influences:
 
-    evennia migrate
+- Caballistics, Inc.  (Rebellion/2000AD)
+- Hellgate: London (Flagship Studios)
+- The Secret World / Secret World Legends (Funcom)
+- Resident Evil (Capcom)
+- The Dresden Files (Jim Butcher)
+- Buffy the Vampire Slayer (Joss Whedon)
 
-To start the server, stand in this directory and run
+Modern Gods can be found at telnet host spellsmith.ddns.net:4000 or by web at http://spellsmith.ddns.net:4001
 
-    evennia start
 
-This will start the server, logging output to the console. Make
-sure to create a superuser when asked. By default you can now connect
-to your new game using a MUD client on `localhost`, port `4000`.  You can
-also log into the web client by pointing a browser to
-`http://localhost:4001`.
-
-# Getting started
-
-From here on you might want to look at one of the beginner tutorials:
-http://github.com/evennia/evennia/wiki/Tutorials.
-
-Evennia's documentation is here:
-https://github.com/evennia/evennia/wiki.
-
-Enjoy!
+More about the Modern Gods world can be found at https://docs.google.com/document/d/1qmzd58sk32aa7PR-YB_8r7bMg3UPGie6M7oVVFd2wEU/edit
