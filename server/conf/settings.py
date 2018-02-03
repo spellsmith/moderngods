@@ -113,6 +113,10 @@ DEFAULT_CHANNELS = [
      "locks": "control:perm(Developer);listen:perm(Admin);send:false()"}
 ]
 
+# Default commands override for game/commands/command.py
+COMMAND_DEFAULT_CLASS = "commands.command.MuxCommand"
+
+
 ######################################################################
 # Settings given in secret_settings.py override those in this file.
 ######################################################################
