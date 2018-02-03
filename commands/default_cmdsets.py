@@ -17,7 +17,7 @@ own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 from evennia import default_cmds
 
 #Contribs Imported
-from evennia.contrib.dice import roll_dice # Dice Roller
+from evennia.contrib import dice # Dice Roller
 from evennia.contrib import simpledoor # Simple, Lockable Doors
 from evennia.contrib import extended_room # Extended Rooms
 from evennia.contrib import gendersub # Gender on characters
