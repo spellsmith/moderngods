@@ -25,7 +25,8 @@ from evennia.contrib import slow_exit # Movement speed / slow exit
 from evennia.contrib import simpledoor # Simple, lockable doors
 from evennia.contrib.mail import CmdMail # Simple in-game mail
 from evennia.contrib.multidescer import CmdMultiDesc # Multi-descriptor
-
+from commands import chargen # Character generation menu
+from typeclasses.mobs import CmdMobOnOff # Turn mobs on/off
 
 class CharacterCmdSet(default_cmds.CharacterCmdSet):
     """
@@ -53,7 +54,7 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         self.add(extended_room.CmdExtendedLook()) # Extended Room
         self.add(extended_room.CmdExtendedDesc()) # Extended Room
         self.add(extended_room.CmdGameTime()) # Extended Room
-
+        self.add(CmdMobOnOff()) # Apply command mobon / moboff
 
 class AccountCmdSet(default_cmds.AccountCmdSet):
     """
@@ -73,6 +74,8 @@ class AccountCmdSet(default_cmds.AccountCmdSet):
         # any commands you add below will overload the default ones.
         #
         self.add(CmdMail()) # In-game mail
+        self.add(chargen.RemoveCharCreateCmdSet()) # Remove default @chargen
+        self.add(chargen.ChargenICCmdSet()) # Populate custom @chargen
 
 class UnloggedinCmdSet(default_cmds.UnloggedinCmdSet):
     """
@@ -110,4 +113,4 @@ class SessionCmdSet(default_cmds.SessionCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
-
+        self.add(chargen.CharCreateCmdSet())

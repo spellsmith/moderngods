@@ -37,9 +37,6 @@ class Character(GenderCharacter, ContribRPCharacter):
         """
         if self.location.access(self, "view"):
             self.msg(self.at_look(self.location))
-        prompt = "Enter Command:"
-        self.msg("\n", prompt=prompt)
-
 
     def announce_move_from(self, destination, msg=None, mapping=None, **kwargs):
         """

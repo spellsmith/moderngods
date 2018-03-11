@@ -83,7 +83,7 @@ TIME_FACTOR = 1.0
 
 # Starting point of game-time in UNIX epoch.
 # 0 is Jan 1 1979
-TIME_GAME_EPOCH = 1517838400
+TIME_GAME_EPOCH = 1520215196
 
 # Multisession mode
 MULTISESSION_MODE = 2

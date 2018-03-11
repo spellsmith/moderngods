@@ -1,0 +1,500 @@
+﻿#
+# Evennia batchfile - vanderbilt_apartment
+#
+# Spellsmith 2018
+#
+# This batchfile sets up the Vanderbilt Apartment in the Modern Gods MUSH.
+#
+# To load this file, place yourself in Limbo (room #2) and load the
+# file as user #1 with
+#
+#     @batchcommand vanderbilt_apartment 
+#
+# If you give the /interactive switch you can step through the
+# build process command for command.
+#
+#
+#------------------------------------------------------------
+# Start to build
+#------------------------------------------------------------
+#
+# We start from limbo. Remember that every command in the batchfile
+# -must- be separated by at least one comment-line.
+@tel #2
+#
+# Note the unique alias tut#XX we give each room. This is used to
+# easily reference this object from other objects in the build script
+# without knowing the dbref. One empty line results in a line-break in
+# the game, whereas two lines create a new paragraph. The length of the
+# lines in the batchfile does not matter, in-game they will fill the
+# lines to the width as defined by the player's client.
+#
+# Dig all the rooms.  We will describe them and do exit linking later.
+@dig Entry Hallway;vand#01
+#
+@dig Guest Bedroom;vand#02
+#
+@dig Guest Bathroom;vand#03
+#
+@dig Library;vand#04
+#
+@dig Library Terrace;vand#05
+#
+@dig Living Room;vand#06
+#
+@dig Kitchen;vand#07
+#
+@dig Dining Room;vand#08
+#
+@dig Dining Room Terrace;vand#09
+#
+@dig South Gallery;vand#10
+#
+@dig North Gallery;vand#11
+#
+@dig Small Ingress;vand#12
+#
+@dig Laundry Room;vand#13
+#
+@dig Master Bathroom;vand#14
+#
+@dig Secondary Bathroom;vand#15
+#
+@dig Private Study;vand#16
+#
+@dig Emily's Bedroom;vand#17
+#
+@dig Jia's Bedroom;vand#18
+#
+@dig Sanneke's Bedroom;#vand19
+#
+@dig The Dressing Room;vand#20
+#
+@dig Private Hallway;vand#21
+#
+@dig Master Bedroom;vand#22
+#
+@dig The Playroom;vand#23
+#
+#
+########################
+#
+# Teleport into the Entry Hallway so we can get started on the real work
+#
+@tel vand#01
+#
+# Describe the room
+#
+@desc The Vanderbilt penthouse entry hallway is home to not one, but two, elevators.  The smaller one is marked with a simple brass plaque labelled '|gPassenger|n'; the larger, a plaque that says '|gService|n'.  A small |gdoor|n, locked with a motion sensor, leads to the staircase.  On the wall opposite the elevators, a row of mounted |ghooks|n provide storage space for coats, scarves, bags, and hats.  Several different dog |gleashes|n hang from the hooks as well.
+#
+# Open the exits.  We don't do this in the @dig command since we want to describe the exit.
+# Syntax:  @open exit name;alias;alias,name from other direction; alias; alias = target#id
+#
+@open (Down) Passenger Elevator;down;passenger;pass;1-elevator;elevator,(Up) Penthouse [Elevator];penthouse;apt;apartment;up:contrib.simpledoor.SimpleDoor  = #2
+#
+# Lock it so Kibou can't get out.
+#
+@lock down = traverse:has_player()
+#
+@open (Down) Staircase;stair;stairs;staircase;down,(Up) Penthouse [Stairs];penthouse;pen;apt;apartment;in;enter;p;:contrib.simpledoor.SimpleDoor = #2
+#
+# Lock it so Kibou can't get out.
+#
+@lock stairs = traverse:has_player()
+#
+@open (W) Guest Bedroom;west;w;guest;guest bedroom,(E) Entry Hallway;east;e;entry;hall;hallway:contrib.simpledoor.SimpleDoor = vand#02
+#
+@open (S) Library;south;s;lib,(N) Entry Hallway;north;n;entry;hall;hallway = vand#04
+#
+@open (SE) Living Room;southeast;se;living room;living;liv,(NW) Entry Hallway;northwest;nw;entry;hall;hallway = vand#06
+#
+# Describe the exits.  They don't actually lead into rooms now, like they might later.
+#
+@desc (Down) Passenger Elevator = The passenger elevator doors look to be polished and finely-finished hardwood.  A sign next to it notes that 'In case of fire, use stairs'
+#
+@desc (S) Staircase;stairs;stair;door = The door to the staircase is held secure by a motion-activated magnetic lock.  A sign next to it notes that 'In case of fire, use stairs'.
+#
+@desc (W) Guest Bedroom = A simple, unadorned wooden door leads to the guest bedroom.  
+#
+@desc (S) Library = Peering towards the south, you can see the hallway broadens out.  Large bookshelves and a comfortable couch are visible.
+#
+@desc (SE) Living Room = Looking southeast down the hallway, you can see a large cream-colored sofa and a large television inside a spacious open area.
+#
+# Details:
+#
+@detail service = The service elevator doors are a rather ordinary burnished steel, and about a meter wide.  A sign next to it notes that 'In case of fire, use stairs'
+#
+@detail hooks = Two rows of hooks are mounted to the opposite wall, alternating high and low in a zig-zag pattern.  They're perfect for storing a coat, purse, or handbag.  There are ten hooks in total, several of which hold dog |gleashes|n.
+#
+@detail leashes = There are no fewer than four different dog leashes hanging from the various metal |ghooks|n.  One is a plain, retractable black cord that pulls back into a sturdy plastic handle; the others are more decorative and have distinctly feminine touches and colors, like violet with glittering rhinestones.  From the size of the dainty leashes, the local dog must be of the 'lap' variety!
+#
+#####################################
+#
+# Next room!  The Guest Bedroom (vand#02)
+#
+@tel vand#02
+#
+# ... and describe it.
+#
+@desc The guest bedroom is plain and straight-forward, with crisp white walls and a single large window overlooking New York City.  A single queen |gbed|n is the most prominent piece of furniture; next to it, a small tripod nightstand with dark legs and a white top holds a |glamp|n.  An abstract |gpainting|n in hues of pastels green, blue, pink, and white hangs over the bed.  On the opposite wall hangs a modest flat-screen |gTV|n for guests keeping up on their favorite series.  
+#
+# Open the exits.  The exit back to the entry hallway already exists.
+#
+@open (NW) Guest Bathroom;northwest;nw;bath;bathroom,(SE) Guest Bedroom;southeast;se;guest;bedroom = vand#03
+#
+# Details
+#
+@detail bed = This queen bed is made with beige sheets, a fluffy white comforter, and a blue accent throw near the foot.  Four pillows -- two tan and two darker brown -- lay against the walnut headboard.
+#
+@detail painting = The canvas is a soft mixture of pastels, mostly blue, pink, and white, with touches of lilac and hints of green.  It could be clouds at sunset, or maybe an evening lakeside forest through a heavy, hazy fog?
+#
+@detail lamp = The bedside lamp has a cylindrical white shade and a gold-tone base that ripples in little 'balls' down the length.  There is no switch to turn it on; it appears to be touch activated.
+#
+@detail tv = A forty-inch Sony flat-screen television with a thin black bezel, is mounted to the wall on an adjustable metal arm.  There might be a remote around here somewhere.
+#
+#####################################
+#
+# Next room!  Guest Bathroom (vand#03)
+#
+@tel vand#03
+#
+# Describe it!
+#
+@desc The three white walls of this bathroom are offset by the fourth, which is painted a dark and muted aqua blue.  A small |gshower|n with a clear glass door stands next to the |gtoilet|n, and next to that is a ceramic |gsink|n recessed into a set of black |gcabinets|n with a pale granite top.  Liquid |gsoap|n rests next to the faucets.  An oval |gmirror|n hangs above the sink.
+#
+# Details
+@detail shower = This simple shower is only big enough for one person -- maybe two, if they're friendly!  The walls and floor are made of off-white, marbled tile, and the door is pure glass from ceiling to floor.  The showerhead is mounted on the wall, but is detachable with a long, flexible metal hose.  There is no shower curtain.
+#
+@detail toilet = It's... a toilet.  
+#
+@detail sink = A standard white ceramic sink basic is set within the granite top of the cabinets. The faucet handle is a single lever, with small 'H' to the left side and 'C' to the right.
+#
+@detail cabinets = These cabinets are high-quality wood, lacquered to a glossy black finish.  Twin doors with small knobs hide a set of plush towels and washcloths, as well as an extra roll of toilet paper, extra soap, and a spare disposable razor.  The top of the cabinet is solid granite.
+#
+@detail soap = This vial of Molton Brown hand soap is about three-fourths full.  According to the bottle, it is 'Orange & Bergamot' scented.
+#
+@detail mirror = Your reflection looks back at you from the spotless glass of the washroom mirror.  The frame is black, with slim and elegant modern lines.  The glass is free of any streaks or imperfections.
+#
+# The exit should already be taken care of.
+#
+######################################
+#
+# The Library (vand#04)
+#
+@tel vand#04
+#
+@desc |gBookcases|n form the north and west walls of the penthouse library.  They're painted white, with storage cabinets built into the lower areas and eight separate levels of shelves reaching upwards towards the ceiling.  The vast majority are books, about topics ranging from the fluffy to the fantastic, and the satirical to the studious.  Everything, save a few racier romance novels, is very 'safe for company'.  A large flat-screen |gtelevision|n is mounted in the middle of all the shelves in its own little alcove, and above and below it is an impressive library of |gDVDs|n.  An L-shaped dark grey sectional |gsofa|n provides comfortable seating for readers, alongside two plain-looking |gchairs|n.  A low and long |gcoffee table|n completes the furniture, along with a floor lamp nearby.
+#
+# Details
+#
+@detail chairs = These chairs are remarkably ordinary.  They look comfortable enough, though, if you want to grab a book.
+#
+@detail bookcases = The entire WALL -- two walls! -- is made of bookcases.  Five distinct rows of shelves, stretching in either direction, are home to a cornucopia of texts of all sorts.  There are books on medieval science; books on music theory and biographies of Beethoven and Bach.  Tomes on Victorian crimes, and several about pirates (both fiction and non).  There's more than a few trashy bodice-ripper romances.  The sheer number of texts and the breadth of subjects they cover is remarkable.
+#
+@detail television = At forty-ish inches diagonal, this flat screen LCD TV  is on the small side for the penthouse, although it's more than adequate to enjoy one of the DVDs while reclining on the sofa or in one of the chairs.
+#
+@detail coffee table = This low coffee table is only about knee-high, and is about 1.5m (or about 5 feet) long.  It's made from dark, solid, high quality wood that is both surprisingly sturdy and impressively heavy.  Several small round coasters, each bearing the sketched portrait and signature of a famous author, are available to set under glasses and drinks.
+#
+@detail sofa = This charcoal grey fabric sofa has seating for three along one 'arm', and a built-in 'chaise longue' for someone to stretch out, on the other.  The cushions are firm, chosen for support rather than decadent comfort; it wouldn't do to fall asleep while reading!  Several throw pillows, white with woven geometrical designs in contrasting black, are strewn about for the taking.
+#
+@detail dvds = Movies are a poor guest in this shrine to literature, but there are a few here.  Perhaps two dozen or so, mostly documentaries, older black and white films, and foreign cinema.  Nothing so routine as the latest Marvel movie or summer blockbuster.  What particular significance these movies have, as opposed to any others, isn't clear.
+#
+# Exits.  The exit to the entry hall (vand#01) should already be covered.
+#
+@open (S) Terrace;south;s;glass;glass door;terrace;terr,(N) Library;glass door;glass;north;n;library;lib:contrib.simpledoor.SimpleDoor = vand#05
+#
+@open (E) Living Room;east;e;living room;living;liv,(W) Library;west;w;library;lib = vand#06
+#
+##########################################
+#
+# Library Terrace (vand#05)
+#
+@tel vand#05
+#
+@desc The terrace looks out over New York City with a fabulous |gview|n.  The floor and sides of the patio are constructed from high-quality ipe wood, while protective aluminum bars add an extra measure of safety where the waist-high wall stops.  The patio furniture is made of grey rattan:  four comfortable chairs, and a low table to hold snacks, drinks, or games.  In the center of the table, a small bonzai tree in a shallow rectangular dish brightens the area.  A retractable awning overhead can provide protection from sun and rain alike.
+#
+# Details -- with time of day tags!
+#
+@detail view = <morning>The morning sun filters between New York skyscrapers, painting the city in hues of soft gold.  The sounds of horns and engines are ever-present and angry, as thousands of people go about their morning routine, on foot or in their cars.  Pigeons roost on nearby buildings and complement the blare with gentle cooing.</morning><afternoon>Clouds have moved in over the afternoon, and the skyline is hazy grey.  New York is never quiet, but this may be the closest it comes.  In the distance a siren howls, and neighborhood dogs bark in commiseration.  People on the streets below, from eight stories up, look like ants.</afternoon><evening>The sun is starting to set, and the Big Apple is bathed in gold, rose, and violet as the light begins to die.  The streets below are alive with people rushing back to homes after busy days, and the wind has picked up to carry with it a late-day chill.</evening><night>The city never sleeps.  The stars above are washed out by the ever-present glow of neon and fluorescent, and the horizon is dotted with a million man-made glimmers through distant windows.  The ruby glow of brakelights snake through the streets like a fiery serpent, and the sounds of laughter and arguments filter up into the cool night air.</night>
+#
+# Exit is already taken care of.
+#
+#############################
+#
+# Living Room (vand#06)
+#
+@tel vand#06
+#
+@desc The penthouse living room has a spacious open plan.  A  three sectional, off-white sofa provides cozy seating for up to nine people, around an elegant wooden coffee table inlaid with tempered black glass.  Throw pillows provide support, and a small cylindrical foot stool and lone wicker chair are available for those in less social moods.  Overhead, a chandelier made of irregular rectangular 'chambers' casts gentle light when turned on.  The sofa faces the windows, which provide a gorgeous view, day or night.  A razor-thin, 65-inch LCD television screen is mounted on a motorized arm that can angle it perfectly for a movie night, or store it, flat and horizontal, against the ceiling for an unobstructed view of the city beyond.
+#
+#
+# Exits
+#
+# The Library and Entry Hall are already taken care of
+#
+@open (N) Kitchen;north;n;kitchen;kit;kitch,(S) Living Room;south;s;living;liv;living room = vand#07
+#
+@open (E) Dining Room;east;e;dining room;dining;din,(W) Living Room;west;w;living room;living;liv = vand#08
+#
+#
+##########################
+#
+# The Kitchen (vand#07)
+#
+@tel vand#07
+#
+@desc Granite countertops and tile floor make this stylish kitchen both modern and easy to clean.  A broad kitchen island stands ready to hold drinks, plates, or bowls of snackable fruit.  Behind it, built into the wall, are rows of slim cabinets that house everything from pots to appliances to canned goods to spices.  The stovetop has four gas burners, and is separate from the wall-mounted convection oven.  A large microwave is also mounted on the wall, separated by a drawer from the well-stocked wine refrigerator underneath.  A refrigerator, freezer, and dishwasher round out the major appliances, while a high-end coffee machine, blender, and other small appliances are tucked neatly away when not in use.  A stainless steel dual-basin sink with a motion-activated faucet serves as storage for occasional dirty dishes.
+#
+# Exits.  Living room should have already been taken care of.
+#
+@open (SE) Dining Room;southeast;se;dining room;dining;din,(NW) Kitchen;northwest;nw;kitchen;kitch;kitch = vand#08
+#
+######################
+#
+# The Dining Room
+#
+@tel vand#08
+#
+@desc The dining room is nestled into the southeast corner of the apartment, surrounded by large windows on two full sides.  Hardwood floor underfoot is softened by an expansive cream-colored area rug underneath a solid oak dining table crafted with clean, modern lines.  The chairs -- wood with cream upholstry -- provide seating for six, with room to add two or three more if needed.  Overhead track lighting set on a dimmer switch provides illumination, and several large potted plants add a touch of natural greenery to the elegant decor.
+
+A sliding glass door on the south wall provides access to the terrace.  To the north, the room stretches out for another ten meters and transforms into the main gallery.  Immediately to the west is the living room, while the kitchen is to the northwest.
+#
+# Exits.  Living Room and Kitchen should be taken care of.
+#
+@open (S) Terrace;south;s;terrace;terr;glass door;glass,(N) Dining Room;north;n;glass door;glass;dining room;dining;din:contrib.simpledoor.SimpleDoor = vand#09
+#
+@open (N) Gallery;north;n;gallery;gall;gal,(S) Dining Room;south;s;dining room;dining;din = vand#10
+#
+#############################################
+#
+# Dining Room Terrace (vand#09)
+#
+@tel vand#09
+#
+@desc  The terrace looks out over New York City with a fabulous view.  The floor and sides of the patio are constructed from high-quality ipe wood, while protective aluminum bars add an extra measure of safety where the waist-high wall stops.  The patio furniture is made of grey rattan:  a two-person love seat, two comfortable chairs, and a low table for drinks, books, or accessories.  A large ceramic pot in one corner houses a slim boxwood evergreen, and a retractable awning overhead can provide protection from sun and rain alike.
+
+A sliding glass door allows access to the inside of the apartment, and connects to the dining room. 
+#
+# Exits have already been taken care of. 
+#
+#################################################
+#
+#  South Gallery (vand#10)
+#
+@tel vand#10
+#
+@desc The penthouse gallery is a long, stylish room that runs the length of the east side.  The 'wall' is a series of windows that face the morning sun, while the floor is polished hardwood here and there broken by the addition of a white shag rug.  The interior wall serves as a display for the expensive paintings and immense framed photographs that showcase the family and their sense of beauty:  smiling pictures of partners together; a small and content kitten arching against a woman's ankle in high heels; a full-color, zoomed-a-million-times print of a microscope drop of magnetic fluid. Part of the wall stops and gives way to the kitchen bar, but there's no access to the kitchen itself.  
+
+To the north, the rest of the gallery stretches onwards towards a baby grand piano and the private bedrooms.  To the south, the dining room and a balcony await. 
+#
+#  Exits.  Dining room is taken care of.
+#
+@open (N) Gallery;north;n;gal;gallery;gal,(S) Gallery;south;s;gal;gallery = vand#11
+#
+####################################
+#
+#  North Gallery (vand#11)
+#
+@tel vand#11
+#
+@desc The east-most side of the apartment is comprised of a large and luxurious gallery.  The outside wall is a series of large plate windows that look out over the New York skyline from the eighth story, letting in the morning sunshine to spill across the hardwood floors.  Here and there white shag rugs add warmth.  The interior wall is hung with a variety of artwork and portraits:  large, professional black and white prints of the family members; bright geometric prints; florals and flowers.  A chaise longue rests near a Steinway baby grand piano.  
+
+To the north, a beaded privacy curtain separates the galley from the private bedroom area; to the south, the gallery continues for several meters more.  To the east, a small ingress gives access to the more mundane areas of laundry room and a discreet bathroom.
+#
+# Exits!  South Gallery is taken care of.
+#
+@open (N) Private Study;study;priv;private;north;n;bead;beaded;cur;curtain;bed;bedroom, (S) Gallery;south;s;bead;beaded;cur;curtain;gal;gallery = vand#16
+#
+@open (E) Ingress;east;e;in;ing;ingress,(W) Gallery;west;w;gal;gallery = vand#12
+#
+##########################################
+#
+# Small Ingress (vand#12)
+#
+@tel vand#12
+#
+@desc This walkway isn't long enough to be a hallway, nor big enough to be a room.  It just a small 'T' offshoot that connects the secondary bathroom, the laundry room, and the expansive public gallery.  The only furniture here is a small end table with decorative flowers on it, and a tasteful painting of a nude woman, all bits artfully obscured by the angle, sitting against a dark background.
+
+A privacy door exits to the secondary bathroom to the north, while open walkways lead to the laundry room and the public gallery to the south and the east, respectively.
+#
+# Exits.  The public gallery exit is taken care of.
+#
+@open (N) Secondary Bathroom;north;n;bath;bathroom;sec;secondary,(S) Ingress;south;s;in;ing;ingress:contrib.simpledoor.SimpleDoor = vand#15
+#
+@open (S) Laundry;south;s;laun;laundry,(N) Ingress;north;n;in;ing;ingress = vand#13
+#
+################################
+#
+# Laundry (vand#13)
+#
+@tel vand#13
+#
+@desc The rectangular room is long, narrow, and surprisingly plain given the opulence in the rest of the house.  Pale yellow walls and white trim gives it an almost sunny disposition; white shelving holds various household stain removers, laundry detergent, and dryer sheets.  A drying rack stands in one corner, for items too delicate to risk a tumble.  Against the far west wall stand  a paired washer and dryer, each one new and obvious expensive --- and obviously well-used.
+
+A door near the washer and dryer leads north into the master bathroom.  On the far side of the room, an open arch leads to a small ingress, and from there, the gallery.
+#
+# Exits!  Ingress is taken care of.
+#
+@open (N) Master Bathroom;north;n;door;bath;bathroom;master,(S) Laundry;south;s;door;laundry;laun:contrib.simpledoor.SimpleDoor = vand#14
+#
+##########################
+#
+# Master Bathroom (vand#14)
+#
+@tel vand#14
+#
+@desc The master bath is a luxurious room in warm tones of gold and black.  The tile floor is polished granite.  Immediately next to the north door are large, open shelves filled with plush towels.  The main part of the room is dominated by a large, low to the ground bathtub that can easily fit two people side by side -- three if they're on very good terms!  A wide double sink stretches along the other wall, and a small toilet discreetly tucked into a corner.
+
+The door to the north leads into the private dressing room; a door to the south leads to the laundry room.
+#
+# Exits!  Laundry room is taken care of.
+#
+@open (N) Dressing Room;north;n;dressing room;dressing;dress,(S) Master Bathroom;south;s;bath;bathroom:contrib.simpledoor.SimpleDoor = vand#20
+#
+#
+#################################
+#
+#  Secondary Bathroom (vand#15)
+#
+@tel vand#15
+#
+@desc This small bathroom is done in muted, classic hues.  Dark blue-grey tile decorates the floor; the cabinets are clean and white.  There's a single toilet against the east wall; next to it, a simple counter with a steel sink sunk into the basin.  On the west wall rests the ceramic bathtub. A door to the north separates the bathroom from the private study.  The southern door leads to a small ingress towards the public parts of the home.
+#
+# Exits!  The Ingress is taken care of already.
+#
+@open (N) Private Study;north;n;study;private;priv;stud,(S) Secondary Bathroom;south;s;bath;bathroom;sec:contrib.simpledoor.SimpleDoor = vand#16
+#
+#
+######################################
+#
+# Private Study (vand#16)
+#
+@tel vand#16
+#
+@desc The study resembles a living room in miniature.  A ceiling-to-floor bookcase covers the length of the west wall.  A cherry-wood table with seating for three stands before the collection of literature, and another, larger, cream-colored chair sets off  to the side for solitary study.  Artwork of favorite authors and inspirational quotes hang on the walls.  Three of the four bedrooms open in on this room:  Emily's to the east, Jia's to the northeast, and Sanneke's to the north.  The hallway continues west towards the main dressing room, and a beaded privacy curtain separates the study from the main gallery to the south.  A small, discrete door leads south as well, to the secondary bathroom.
+#
+# Exits.  Ooooh boy.  Gallery and Bathroom are taken care of.
+#
+@open (E) Emily's Bedroom;east;e;emily;em;emily's,(W) Private Study;west;w;study;private;priv;stu:contrib.simpledoor.SimpleDoor = vand#17
+#
+@open (NE) Jia's Bedroom;northeast;ne;jia;jia's,(SW) Private Study;southwest;sw;study;private;priv;stu:contrib.simpledoor.SimpleDoor = vand#18
+#
+@open (N) Sanneke's Bedroom;north;n;san;sanneke;sandrijn,(S) Private Study;s;south;study;private;priv;stu:contrib.simpledoor.SimpleDoor = vand#19
+#
+@open (W) Dressing Room;west;w;dressing room;dressing;dress,(E) Private Study;east;e;study;stu;private;priv = vand#20
+#
+###############################################
+#
+# Emily's Bedroom (vand#17).  This has yet to be described yet and is pending Theryl.
+#
+@tel vand#17
+#
+@desc (This room has yet to be described!)
+#
+# Exits have been taken care of; there is only one!
+#
+############################################
+#
+# Jia's Bedroom (vand#18)
+#
+@tel vand#18
+#
+@desc A surprisingly heavy door gives way into a very unusual bedroom. The long room has been subdivided into two very distinct 'halves'. The side closest to the door is much more ordinary, featuring a queen sized bed extending from the middle of the wall to bisect the space in two yet again. One side features the large walk in closet, while the other is taken up with a small computer desk and rolling office chair. 
+
+The other side of the room is much less ordinary. The back wall is lined not with shelves but with stacked filing cabinets, lined up floor to ceiling, the only exception being a square gap left over the large window, and a sink just below that gap. The bottom right of the wall swaps out cabinets entirely for a row of four small mini fridges, humming softly. 
+
+The center of the space is taken up with a long, wooden table marked in strange colors here and there. A pair of Bunsen burners rest on one side, while a pair of small pumpkin sized cauldrons take up the other end. The ceiling has been retrofitted with an industrial vent, and a trio of sensors. One of them is the fire alarm, but what purpose the other two serve is anyone's guess. 
+#
+# Exits have been taken care of already!
+#
+################################################
+#
+# Sanneke's Bedroom (vand#19)
+#
+@tel vand#19
+#
+@desc Clean, modern lines dominate this bedroom.  The walls are a soft, warm cream, while the furniture is dark and natural wood.  A king-sized bed dominates the western wall, with lush pillows and crisp sheets. Small nightstands brace it to either side.  The north 'wall' is actually window divided into several floor-to-ceiling panels that offer a marvelous view out into the city beyond.  A large Bird of Paradise plant bathes in the sun, homed in a large grey pot, and modern indoor water fountain, made of bamboo, adds the scent and sound of gentle water to the air.  A large dresser with a rectangular vanity mirror, on the east wall, serves as home to several framed photographs and various odds and ends.  Next to it rests a plush and comfortable chair and matching footstool.  Small wireless speakers are tucked into each ceiling corner.
+#
+# Exits have been taken care of already.
+#
+##########################################
+#
+# Dressing Room (vand#20)
+#
+@tel vand#20
+#
+@desc The private quarters' dressing room is lined with shelves and open closet space.  Tasteful open alcoves serve as home to expensive gala gowns, ceremonial finery, and items for special occasions; seasonal wear for Halloween and Christmas; and other playful things that would be out of place amongst daily couture.  Interspersed between the closets are blocks of shelves mounted directly to the walls, which hold folded garments and dozens upon dozens of pairs of shoes.  A tall, built-in vanity does double-duty as accessory and jewelry storage, with its drawers holding belts, scarves, watches, bracelets, earrings, and more.  Two small chairs await anyone who needs to sit and pull on shoes, or rest while giving opinions during a lengthy debate of what to wear.
+
+The hallway continue to the east towards the private study, and to the west towards the playroom.  A door leads to the master bedroom to the north, and a short walkway connects the dressing room to the main bathroom to the south.
+#
+# Exits.  The bathroom and private study have been taken care of.
+#
+@open (W) Playroom Hallway;west;w;play;playroom,(E) Dressing Room;east;e;dressing room;dress;dressing = vand#21
+#
+@open (N) Master Bedroom;north;n;bed;bedroom;master;mast;jess;jessica,(S) Dressing Room;south;s;dress;dressing;dressing room:contrib.simpledoor.SimpleDoor = vand#22
+#
+#########################################
+#
+# Playroom Hallway (vand#21)
+#
+@tel vand#21
+#
+@desc The hallway dims as it passes the master bedroom and stretches towards the playroom beyond.  Two closets are set into the walls here, one on each side, to hold outfits and accessories of more risque varieties.  To the east, the lights brighten into a cheerful, very normal apartment, as the hall leads into the 'mundane' dressing room.  West, the recessed ceiling lights dim and set the mood.  The two fixtures nearest the large wooden door are fitted with red filters, casting the last few feet in a seductive -- or menacing --- ruby glow.
+
+To the east, the hallway leads to the dressing room.  The master bedroom is to the north.  A wooden door to the south leads to the playroom.
+#
+# Exits.  The dressing room has been taken care of.
+#
+@open (N) Master Bedroom;north;n;master;mast;bedroom;bed;jess;jessica,(S) Playroom Hallway;south;s;hall;hallway;play;playroom:contrib.simpledoor.SimpleDoor = vand#22
+#
+@open (S) Playroom;south;s;playroom;play,(N) Playroom Hallway;north;n;hall;hallway:contrib.simpledoor.SimpleDoor = vand#23
+#
+#############################
+#
+# Master Bedroom (Jessica's Bedroom) (vand#22)
+#
+@tel vand#22
+#
+@desc The master bedroom is decorated in modern, muted colours and finished to a very high standard. The floor is wooden panelled, in-keeping with the rest of the apartment, in varnished birch. The long window drapes are a heavy, dark wine-red velvet backed with white, and would do an excellent job of cutting out the light from the city. The room is lit with atmospheric track and mood lighting. There is a small pile of paperwork, and magazines, discarded on the east-side of the bed.
+
+Most of the room is taken up with a massive, wooden-framed queen-sized bed. On either side are small ash nightstands, covered in clutter including phone chargers, headphones, glasses cases and an expensive radio alarm. The bed is unmade, and a laptop is sat in the middle of the burgundy sheets.  On the east wall is a glass-topped dressing table, with a large vanity mirror.  In the south east corner is a tall wooden cabinet, which appears to have a heavy combination lock.
+#
+# Exits.  These are already taken care of.
+#
+#####################################
+#
+# Playroom (vand#23)
+#
+@tel vand#23
+#
+@desc What to some is a 'playroom', others would call 'dungeon'.  The walls are soundproofed stone, the masony still visible under dark grey matte paint.  The floor is natural polished wood.  The dungeon itself is L-shaped, and in each direction, some ten feet from the door, a heavy wooden frame braces the ceiling.  Eye screws and carabiners are set into the frames, perfect to attach ropes or chains.  Two St. Andrews crosses are set against the walls, one in each arm of the L.   A waist-high padded bondage table with four posts might also serve as a bed when needed; at its foot is a steel cage made for adult-sized captives.  Lined against the walls are racks of implements, both of pleasure and of pain.  A large, wheeled steel toolbench stores smaller items, ranging from pinwheels to scalpels to dildos to nipple clamps.  The only illumination is from oblong, heavy-shaded lamps that dangle from the ceiling, and occasional candles set on the floor, usually near the several mirrors that let the Dominants admire their work.
+#
+# Exits.  There's only one, and it's taken care of.
+#
+###########
+#
+# Go back to Limbo.  Change it!
+#
+@tel #2
+#
+@rename Limbo = The Foyer
+#
+@desc You stand in the public lobby of an otherwise private apartment building in New York City.  'Extravagant' is an understatement.  Smooth, polished grey marble makes up the expansive flooring, and white walls accented with dark oak panels stretch towards the ceilings.  Recessed lights offer soft illumination, much of it coming from a large suspended 'chandelier' that is a perfect, slim circle of light.  Charcoal grey recliners and black leather sofas provide areas to sit and relax on either side of a large reception desk.
+
+The desk itself mirrors the room itself.  The body is finely finished wood; the top is a lighter colored marble.  Behind it, a wall of lush greenery -- actual plants, somehow growing vertically on a special surface -- adds verdant life to the otherwise strictly business environment.  There is no receptionist present, but there are both elevators and stairs available to use.
+#
+#
+# And set the 'Getting Started' help.
+#
+@sethelp/replace Getting Started =
+ |wWelcome to |cModern Gods|w!|n
+
+ This is a pre-alpha, live instance game.  Expect it to be both basic and full of bugs!
+ It is very much a work in progress, and can use your help with feedback, thoughts, 
+ and ideas! Please report any bugs, features, or feedback to |wSpellsmith|n via in-game mail (|w@mail|n).
+ 
+ You can get help on any command by typing |whelp command|n (e.g. |yhelp look|n).  To see a complete list of commands available, type |whelp|n.  You may have different commands available when you are @ic than when you are @ooc !
+
+ Type |ylook|n to see where you are.  You can also |wlook|n at objects, people, and things!  You can travel in different directions by typing the name of the exit, or its key letter (listed in parentheses).  If it's a door, it might be closed or locked!  Lastly, try |yget|n and |ydrop|n.
+#
+#

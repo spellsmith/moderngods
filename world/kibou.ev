@@ -1,0 +1,39 @@
+﻿##########################
+#
+# Create Kibou!
+#
+# First, teleport to the living room.  This is Kibou's default start location.
+@tel vand#06
+#
+# Create the mobile. This is its start location.
+@create/drop Kibou;kibou;kib;dog;chin:typeclasses.mobs.Mob
+#
+# Set its home to this location
+#
+@sethome kibou = vand#06
+#
+@lock kibou = get:false()
+#
+@set kibou/get_err_msg = Kibou wriggles and squirms out of your hands!
+#
+# Kibou is a patrolling, immortal, non-aggressive, non-hunting mob.
+#
+@set kibou/patrolling = True
+#
+@set kibou/aggressive = False
+#
+@set kibou/hunting = False
+#
+@set kibou/immortal = True
+#
+@set kibou/desc_alive = This little dog is a Japanese Chin, and is just barely larger than a house-cat!  It has long, soft white fur which is spotted here and there with patched of black.  Its muzzle is white, as is its forehead, but both eyes and both ears are masked with black 'wings'.  A fluffy tail curls up over its back and wags excitedly.  Kibou wears a small collar around her neck which jingles and jangles as she trots from room to room, announced by the click-clack of blunt claws against the hardwood floors.
+#
+@set Kibou/desc_dead = Oh my god!  You killed Kibou!
+#
+# Give Kibou some random echoes (echoed at irregular intervals)
+#
+@set kibou/irregular_msgs = ["With a heavy sigh, the little dog lays down on the floor and rests her head on her front paws.", "Kibou gives a single, sharp bark for attention!","Kibou yawns widely before getting up and trotting a short distance away.","Kibou snuffles at something along the floor.","Both ears perk as something catches the little dog's attention.","Kibou plonks her butt on the ground and lifts a hind leg to scratch behind one ear."]
+#
+# Start the mob
+#
+mobon Kibou
