@@ -20,15 +20,15 @@ from evennia import utils
 
 CONNECTION_SCREEN = """
 |b==============================================================|n
- Welcome to |C{}|n, version {}!
+ Welcome to |c{}|n!
 
-|gAlton, Massachusetts:|n  a city that doesn't exist, populated by 
+|wAlton, Massachusetts:|n  a city that doesn't exist, populated by 
 immortals who can either save the world or destroy it. Power games
 and misdirection as secret societies vye for control of our mundane
 world, or -- in theory -- work together to keep damnation at bay.
 
 |cModern Gods|n is an experimental urban supernatural roleplay MUD, 
-inspired by the stories of the |gCerberus Solutions|n roleplay group 
+inspired by the stories of the |wCerberus Solutions|n roleplay group 
 and various real world, literary, and original influences, including:
 
 - |rCabbalistics, Inc.|n (Rebellion/2000AD)
