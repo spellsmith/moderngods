@@ -23,6 +23,35 @@ several more options for customizing the Guest account system.
 """
 
 from evennia import DefaultAccount, DefaultGuest
+import time
+from django.conf import settings
+from django.utils import timezone
+from evennia.typeclasses.models import TypeclassBase
+from evennia.accounts.manager import AccountManager
+from evennia.accounts.models import AccountDB
+from evennia.objects.models import ObjectDB
+from evennia.comms.models import ChannelDB
+from evennia.commands import cmdhandler
+from evennia.utils import logger
+from evennia.utils.utils import (lazy_property, to_str,
+                                 make_iter, to_unicode, is_iter,
+                                 variable_from_module)
+from evennia.typeclasses.attributes import NickHandler
+from evennia.scripts.scripthandler import ScriptHandler
+from evennia.commands.cmdsethandler import CmdSetHandler
+
+from django.utils.translation import ugettext as _
+from future.utils import with_metaclass
+
+__all__ = ("DefaultAccount",)
+
+_SESSIONS = None
+
+_AT_SEARCH_RESULT = variable_from_module(*settings.SEARCH_AT_RESULT.rsplit('.', 1))
+_MULTISESSION_MODE = settings.MULTISESSION_MODE
+_MAX_NR_CHARACTERS = settings.MAX_NR_CHARACTERS
+_CMDSET_ACCOUNT = settings.CMDSET_ACCOUNT
+_CONNECT_CHANNEL = None
 
 
 class Account(DefaultAccount):
@@ -92,6 +121,82 @@ class Account(DefaultAccount):
      at_server_shutdown()
 
     """
+    def at_look(self, target=None, session=None, **kwargs):
+        """
+        Called when this object executes a look. It allows to customize
+        just what this means.
+        Args:
+            target (Object or list, optional): An object or a list
+                objects to inspect.
+            session (Session, optional): The session doing this look.
+            **kwargs (dict): Arbitrary, optional arguments for users
+                overriding the call (unused by default).
+        Returns:
+            look_string (str): A prepared look string, ready to send
+                off to any recipient (usually to ourselves)
+        """
+
+        if target and not is_iter(target):
+            # single target - just show it
+            return target.return_appearance(self)
+        else:
+            # list of targets - make list to disconnect from db
+            characters = list(tar for tar in target if tar) if target else []
+            sessions = self.sessions.all()
+            is_su = self.is_superuser
+
+            # text shown when looking in the ooc area
+            result = ["|wWelcome, |g%s|n|w! (You are Out-of-Character)|n" % self.key]
+
+            nsess = len(sessions)
+            result.append(nsess == 1 and "\n\n|CConnected session:|n" or "\n\n|cConnected sessions (%i):|n" % nsess)
+            for isess, sess in enumerate(sessions):
+                csessid = sess.sessid
+                addr = "%s (%s)" % (sess.protocol_key, isinstance(sess.address, tuple) and
+                                    str(sess.address[0]) or str(sess.address))
+                result.append("\n %s %s" % (session.sessid == csessid and "|w* %s|n" % (isess + 1) or
+                                            "  %s" % (isess + 1), addr))
+            result.append("\n\n|CAvailable commands:")
+            result.append("\n |whelp|n - Show more commands")
+
+            charmax = _MAX_NR_CHARACTERS if _MULTISESSION_MODE > 1 else 1
+
+            if is_su or len(characters) < charmax:
+                if not characters:
+                    result.append("\n\n You don't have any characters yet. See |whelp @charcreate|n to create one.")
+                else:
+                    result.append("\n |w@charcreate <name>|n - Create a new character")
+                    result.append("\n |w@chardelete <name>|n - Delete a character (cannot be undone!)")
+
+            result.append("\n |wooc <message>|n - Talk to the OOC public chat channel")
+            if characters:
+                string_s_ending = len(characters) > 1 and "s" or ""
+                result.append("\n |w@ic <character>|n - Enter the game as a character (use |w@ooc|n to get back here)")
+
+                if is_su:
+                    result.append("\n\n|CAvailable character%s|n (%i/unlimited):" % (string_s_ending, len(characters)))
+                else:
+                    result.append("\n\n|CAvailable character%s%s:|n"
+                                  % (string_s_ending, charmax > 1 and " (%i/%i)" % (len(characters), charmax) or ""))
+
+                for char in characters:
+                    csessions = char.sessions.all()
+                    if csessions:
+                        for sess in csessions:
+                            # character is already puppeted
+                            sid = sess in sessions and sessions.index(sess) + 1
+                            if sess and sid:
+                                result.append("\n - |G%s|n [%s] (played by you in session %i)"
+                                              % (char.key, ", ".join(char.permissions.all()), sid))
+                            else:
+                                result.append("\n - |R%s|n [%s] (played by someone else)"
+                                              % (char.key, ", ".join(char.permissions.all())))
+                    else:
+                        # character is "free to puppet"
+                        result.append("\n - %s [%s]" % (char.key, ", ".join(char.permissions.all())))
+            look_string = ("-" * 68) + "\n" + "".join(result) + "\n" + ("-" * 68)
+            return look_string
+
     pass
 
 
